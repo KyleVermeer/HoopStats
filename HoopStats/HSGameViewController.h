@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Team.h"
+#import "Team+Create.h"
 
 @interface HSGameViewController : UIViewController
 

@@ -217,64 +217,24 @@
 
 -(void)setUpPlayers
 {
-    self.homeTeamPlayers = [[self.homeTeam.players allObjects] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        Player *firstPlayer = (Player*)obj1;
-        Player *secondPlayer = (Player*)obj2;
-        if (firstPlayer.jerseyNumber.intValue > secondPlayer.jerseyNumber.intValue) {
-            return NSOrderedDescending;
-        } else if (firstPlayer.jerseyNumber.intValue < secondPlayer.jerseyNumber.intValue) {
-            return NSOrderedAscending;
-        } else {
-            return NSOrderedSame;
-        }
-    }];
-    
-    
-    self.awayTeamPlayers = [[self.awayTeam.players allObjects] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        Player *firstPlayer = (Player*)obj1;
-        Player *secondPlayer = (Player*)obj2;
-        if (firstPlayer.jerseyNumber.intValue > secondPlayer.jerseyNumber.intValue) {
-            return NSOrderedDescending;
-        } else if (firstPlayer.jerseyNumber.intValue < secondPlayer.jerseyNumber.intValue) {
-            return NSOrderedAscending;
-        } else {
-            return NSOrderedSame;
-        }
-    }];    
+    self.homeTeamPlayers = [self.homeTeam playersSortedByJerseyNumber];
+    self.awayTeamPlayers = [self.awayTeam playersSortedByJerseyNumber];
 }
 
 -(void)setUpButtons
 {
     // Home Team Button
-    [self.homeTeamButton1 setTitle:[[((Player*)[self.homeTeamPlayers objectAtIndex:0]) jerseyNumber] stringValue] forState:UIControlStateNormal];
     [self setUpButton:self.homeTeamButton1 forPlayer:[self.homeTeamPlayers objectAtIndex:0]];
-    
-    [self.homeTeamButton2 setTitle:[[((Player*)[self.homeTeamPlayers objectAtIndex:1]) jerseyNumber] stringValue] forState:UIControlStateNormal];
     [self setUpButton:self.homeTeamButton2 forPlayer:[self.homeTeamPlayers objectAtIndex:1]];
-    
-    [self.homeTeamButton3 setTitle:[[((Player*)[self.homeTeamPlayers objectAtIndex:2]) jerseyNumber] stringValue] forState:UIControlStateNormal];
     [self setUpButton:self.homeTeamButton3 forPlayer:[self.homeTeamPlayers objectAtIndex:2]];
-    
-    [self.homeTeamButton4 setTitle:[[((Player*)[self.homeTeamPlayers objectAtIndex:3]) jerseyNumber] stringValue] forState:UIControlStateNormal];
     [self setUpButton:self.homeTeamButton4 forPlayer:[self.homeTeamPlayers objectAtIndex:3]];
-    
-    [self.homeTeamButton5 setTitle:[[((Player*)[self.homeTeamPlayers objectAtIndex:4]) jerseyNumber] stringValue] forState:UIControlStateNormal];
     [self setUpButton:self.homeTeamButton5 forPlayer:[self.homeTeamPlayers objectAtIndex:4]];
     
     // Away Team Buttons
-    [self.awayTeamButton1 setTitle:[[((Player*)[self.awayTeamPlayers objectAtIndex:0]) jerseyNumber] stringValue] forState:UIControlStateNormal];
     [self setUpButton:self.awayTeamButton1 forPlayer:[self.awayTeamPlayers objectAtIndex:0]];
-    
-    [self.awayTeamButton2 setTitle:[[((Player*)[self.awayTeamPlayers objectAtIndex:1]) jerseyNumber] stringValue] forState:UIControlStateNormal];
     [self setUpButton:self.awayTeamButton2 forPlayer:[self.awayTeamPlayers objectAtIndex:1]];
-    
-    [self.awayTeamButton3 setTitle:[[((Player*)[self.awayTeamPlayers objectAtIndex:2]) jerseyNumber] stringValue] forState:UIControlStateNormal];
     [self setUpButton:self.awayTeamButton3 forPlayer:[self.awayTeamPlayers objectAtIndex:2]];
-    
-    [self.awayTeamButton4 setTitle:[[((Player*)[self.awayTeamPlayers objectAtIndex:3]) jerseyNumber] stringValue] forState:UIControlStateNormal];
     [self setUpButton:self.awayTeamButton4 forPlayer:[self.awayTeamPlayers objectAtIndex:3]];
-    
-    [self.awayTeamButton5 setTitle:[[((Player*)[self.awayTeamPlayers objectAtIndex:4]) jerseyNumber] stringValue] forState:UIControlStateNormal];
     [self setUpButton:self.awayTeamButton5 forPlayer:[self.awayTeamPlayers objectAtIndex:4]];
 }
 
@@ -299,6 +259,9 @@
 
 -(void)setUpButton:(UIButton*)button forPlayer:(Player*)player
 {
+    [button setTitle:[player.jerseyNumber stringValue] forState:UIControlStateNormal];
+    
+    // Attempt to set photo
     HSPhotoManager* photoManager = [HSPhotoManager sharedInstance];
     dispatch_queue_t photoQueue = dispatch_queue_create("Photo Retrieval", NULL);
     dispatch_async(photoQueue, ^{

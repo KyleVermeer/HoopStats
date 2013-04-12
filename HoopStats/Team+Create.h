@@ -12,5 +12,6 @@
 
 +(Team*)teamWithName:(NSString*)name location:(NSString*)location inManagedObjectContext:(NSManagedObjectContext*)context;
 +(NSArray*)allTeamsInManagedObjectContext:(NSManagedObjectContext*)context;
+-(NSArray*)playersSortedByJerseyNumber;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "Team+Create.h"
+#import "Player+Create.h"
 
 @implementation Team (Create)
 
@@ -38,6 +39,22 @@
     } else {
         return [NSString stringWithFormat:@"%@ %@",self.location,self.teamName];
     }
+}
+
+-(NSArray*)playersSortedByJerseyNumber
+{
+    return [[self.players allObjects] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        Player *firstPlayer = (Player*)obj1;
+        Player *secondPlayer = (Player*)obj2;
+        if (firstPlayer.jerseyNumber.intValue > secondPlayer.jerseyNumber.intValue) {
+            return NSOrderedDescending;
+        } else if (firstPlayer.jerseyNumber.intValue < secondPlayer.jerseyNumber.intValue) {
+            return NSOrderedAscending;
+        } else {
+            return NSOrderedSame;
+        }
+    }];
+
 }
 
 @end

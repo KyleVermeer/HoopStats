@@ -13,6 +13,7 @@
 
 @interface HSDatabase : KVDatabase
 
+// Returns a single instance of the Database
 +(id) sharedInstance;
 
 @end

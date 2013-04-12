@@ -21,8 +21,10 @@ typedef void (^OnDocumentReady) (UIManagedDocument *document);
 
 @property (strong,nonatomic) NSString* databaseFileName;
 
-/* Use the method in order to run any methods that require the document to be created.
- * This method will all the block when the document in created. */
+/*
+This async method can be used to run any methods that require the UIManagedDocument to be created.
+This method will excecute the block when the document in created. 
+ */
 -(void)performWithDocument:(OnDocumentReady)onDocumentReady;
 
 // Designated Initializer

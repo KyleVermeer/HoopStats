@@ -39,15 +39,7 @@
 {
     _team = team;
     // Sort players by number
-    self.playersArray = [[team.players allObjects] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        Player *player1 = (Player*)obj1;
-        Player *player2 = (Player*)obj2;
-        if (player1.jerseyNumber.intValue < player2.jerseyNumber.intValue) {
-            return NSOrderedAscending;
-        } else if (player1.jerseyNumber.intValue == player2.jerseyNumber.intValue) {
-            return NSOrderedSame;
-        } else return NSOrderedDescending;
-    }];
+    self.playersArray = [team playersSortedByJerseyNumber];
 }
 
 #pragma mark - Table view data source
