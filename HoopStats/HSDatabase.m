@@ -9,102 +9,49 @@
 
 #import "HSDatabase.h"
 
-/* Only for making initial data */
+// Only for making initial data
 #import "Team+Create.h"
 #import "Player+Create.h"
 
-@interface HSDatabase()
-
-@property (nonatomic) UIManagedDocument* managedDocument;
-@property (nonatomic) BOOL firstCreation;
-
-@end
-
 @implementation HSDatabase
 
-static HSDatabase* sharedInstance;
+#define DATABASE_FILE_NAME @"hoopstats.db"
 
-#define DATABASE_FILE_NAME @"managedDocumentDB"
-
-/* Initialize shared instance with initialize, called once per class */
-+(void)initialize
-{
-    static BOOL initialized = NO;
-    if (!initialized) {
-        initialized = YES;
-        HSDatabase *database = [[HSDatabase alloc] init];
-        sharedInstance = database;
-    }
-}
+static KVDatabase* sharedInstance;
 
 +(id)sharedInstance
 {
+    if (!sharedInstance) {
+        sharedInstance = [[self alloc] init];
+    }
     return sharedInstance;
 }
 
 -(id)init
 {
-    self = [super init];
+    self = [super initWithDatabaseFileName:DATABASE_FILE_NAME];
     if (self) {
-        NSURL* managedDocumentURL = [self getManagedDocumentURL];
-        self.managedDocument = [[UIManagedDocument alloc] initWithFileURL:managedDocumentURL];
-        self.firstCreation = NO;
+        // Nothing else needed
     }
     return self;
 }
 
--(void)performWithDocument:(OnDocumentReady)onDocumentReady
+-(void)initializeDatabaseInManagedObjectContext:(NSManagedObjectContext *)moc
 {
-    void (^OnDocumentDidLoad)(BOOL) = ^(BOOL success) {
-        if (success) {
-            onDocumentReady(self.managedDocument);
-            if (self.firstCreation) {
-                [self populateInitialDataInManagedObjectContext:self.managedDocument.managedObjectContext];
-                self.firstCreation = NO;
-            }
-        } else {
-            NSLog(@"Trouble opening the document at %@", self.managedDocument.fileURL);
-            exit(1);
-        }
-    };
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[self.managedDocument.fileURL path]]) {
-        [self.managedDocument saveToURL:self.managedDocument.fileURL
-                forSaveOperation:UIDocumentSaveForCreating
-                      completionHandler:OnDocumentDidLoad];
-        self.firstCreation = YES;
-    } else if (self.managedDocument.documentState == UIDocumentStateClosed) {
-        [self.managedDocument openWithCompletionHandler:OnDocumentDidLoad];
-    } else if (self.managedDocument.documentState == UIDocumentStateNormal) {
-        OnDocumentDidLoad(YES);
-    }
-}
-
--(NSURL*)getManagedDocumentURL
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    //Get URL for our cache directory
-    NSArray *urls = [fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
-    NSURL* documentsURL = urls[0];
-    return [documentsURL URLByAppendingPathComponent:DATABASE_FILE_NAME];
-}
-
--(void)populateInitialDataInManagedObjectContext:(NSManagedObjectContext*)context
-{
-    Team *bellarmine = [Team teamWithName:@"Bells" location:@"Bellarmine" inManagedObjectContext:context];
-    Player *grant = [Player playerWithFirstName:@"Grant" lastName:@"Vermeer" number:@(21) inManagedObjectContext:context];
-    Player *jackson = [Player playerWithFirstName:@"Jackson" lastName:@"Gion" number:@(24) inManagedObjectContext:context];
-    Player *blair = [Player playerWithFirstName:@"Blair" lastName:@"Mendy" number:@(12) inManagedObjectContext:context];
-    Player *jack = [Player playerWithFirstName:@"Jack" lastName:@"O'Hara" number:@(34) inManagedObjectContext:context];
-    Player *danny = [Player playerWithFirstName:@"Danny" lastName:@"Schotzman" number:@(22) inManagedObjectContext:context];
+    Team *bellarmine = [Team teamWithName:@"Bells" location:@"Bellarmine" inManagedObjectContext:moc];
+    Player *grant = [Player playerWithFirstName:@"Grant" lastName:@"Vermeer" number:@(21) inManagedObjectContext:moc];
+    Player *jackson = [Player playerWithFirstName:@"Jackson" lastName:@"Gion" number:@(24) inManagedObjectContext:moc];
+    Player *blair = [Player playerWithFirstName:@"Blair" lastName:@"Mendy" number:@(12) inManagedObjectContext:moc];
+    Player *jack = [Player playerWithFirstName:@"Jack" lastName:@"O'Hara" number:@(34) inManagedObjectContext:moc];
+    Player *danny = [Player playerWithFirstName:@"Danny" lastName:@"Schotzman" number:@(22) inManagedObjectContext:moc];
     [bellarmine addPlayers:[NSSet setWithObjects:grant,jackson,blair,jack,danny, nil]];
     
-    Team *saint_francis = [Team teamWithName:@"Lancers" location:@"Saint Francis" inManagedObjectContext:context];
-    Player *khalid = [Player playerWithFirstName:@"Khalid" lastName:@"Johnson" number:@(3) inManagedObjectContext:context];
-    Player *khalil = [Player playerWithFirstName:@"Khalil" lastName:@"Johnson" number:@(23) inManagedObjectContext:context];
-    Player *michael = [Player playerWithFirstName:@"Michael" lastName:@"Lauck" number:@(5) inManagedObjectContext:context];
-    Player *matthew = [Player playerWithFirstName:@"Matthew" lastName:@"Stauber" number:@(12) inManagedObjectContext:context];
-    Player *darius = [Player playerWithFirstName:@"Darius" lastName:@"Thomas" number:@(15) inManagedObjectContext:context];
+    Team *saint_francis = [Team teamWithName:@"Lancers" location:@"Saint Francis" inManagedObjectContext:moc];
+    Player *khalid = [Player playerWithFirstName:@"Khalid" lastName:@"Johnson" number:@(3) inManagedObjectContext:moc];
+    Player *khalil = [Player playerWithFirstName:@"Khalil" lastName:@"Johnson" number:@(23) inManagedObjectContext:moc];
+    Player *michael = [Player playerWithFirstName:@"Michael" lastName:@"Lauck" number:@(5) inManagedObjectContext:moc];
+    Player *matthew = [Player playerWithFirstName:@"Matthew" lastName:@"Stauber" number:@(12) inManagedObjectContext:moc];
+    Player *darius = [Player playerWithFirstName:@"Darius" lastName:@"Thomas" number:@(15) inManagedObjectContext:moc];
     [saint_francis addPlayers:[NSSet setWithObjects:khalid,khalil,michael,matthew,darius, nil]];
 }
 

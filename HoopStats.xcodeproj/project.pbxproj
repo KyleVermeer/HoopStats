@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2714851617181CB300B42B4A /* KVDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2714851517181CB300B42B4A /* KVDatabase.m */; };
 		9A20980F16F1B0C400B9447D /* HSEditTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A20980E16F1B0C400B9447D /* HSEditTeamViewController.m */; };
 		9A20981116F1CDB600B9447D /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9A20981016F1CDB600B9447D /* README.txt */; };
 		9A20981416F27D6A00B9447D /* HSSelectOpposingTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A20981316F27D6A00B9447D /* HSSelectOpposingTeamViewController.m */; };
@@ -89,6 +90,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2714851417181CB300B42B4A /* KVDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVDatabase.h; sourceTree = "<group>"; };
+		2714851517181CB300B42B4A /* KVDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVDatabase.m; sourceTree = "<group>"; };
 		9A20980D16F1B0C400B9447D /* HSEditTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSEditTeamViewController.h; sourceTree = "<group>"; };
 		9A20980E16F1B0C400B9447D /* HSEditTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSEditTeamViewController.m; sourceTree = "<group>"; };
 		9A20981016F1CDB600B9447D /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
@@ -215,6 +218,8 @@
 		9A7088D516EF240C004D3E62 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2714851417181CB300B42B4A /* KVDatabase.h */,
+				2714851517181CB300B42B4A /* KVDatabase.m */,
 				9AFF1DC616F546AC004F2675 /* Game.h */,
 				9AFF1DC716F546AC004F2675 /* Game.m */,
 				9AFF1DC316F546AC004F2675 /* Team.h */,
@@ -566,6 +571,7 @@
 				9AFF1DCE16F6BB6C004F2675 /* HSRulesViewController.m in Sources */,
 				9A9041631704C45B002E59C0 /* HSPlayerCell.m in Sources */,
 				9A9041681704D26C002E59C0 /* HSGameCell.m in Sources */,
+				2714851617181CB300B42B4A /* KVDatabase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

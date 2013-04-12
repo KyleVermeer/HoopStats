@@ -20,15 +20,12 @@
 
 -(id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        
-    }
-    return self;
+    //To enforce use of designated intializer
+    return nil;
 }
 
-- (id)initWithFrame:(CGRect)frame type:(HSStatButtonType)buttonType {
-    self = [self initWithFrame:frame];
+-(id)initWithFrame:(CGRect)frame type:(HSStatButtonType)buttonType {
+    self = [super initWithFrame:frame];
     if (self) {
         self.HSButtonType= buttonType;
         self.backgroundColor = [UIColor clearColor];
@@ -38,7 +35,11 @@
 }
 
 
-
+/* Name: configureImages
+ * Inputs: None
+ * Returns: None
+ * Description: Sets the image for the button, this should always be called upon creation of the button.
+ */
 -(void)configureImages
 {
     switch (self.HSButtonType) {

@@ -25,8 +25,10 @@ typedef enum {
 
 @interface HSStatButton : UIButton
 
+// Set during initialization
 @property (nonatomic, readonly) HSStatButtonType HSButtonType;
 
+// Designated initializer
 -(id)initWithFrame:(CGRect)frame type:(HSStatButtonType)buttonType;
 
 @end

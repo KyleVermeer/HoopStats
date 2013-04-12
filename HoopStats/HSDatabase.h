@@ -9,11 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-typedef void (^OnDocumentReady) (UIManagedDocument *document);
+#import "KVDatabase.h"
 
-@interface HSDatabase : NSObject
+@interface HSDatabase : KVDatabase
 
 +(id) sharedInstance;
--(void)performWithDocument:(OnDocumentReady)onDocumentReady;
 
 @end
